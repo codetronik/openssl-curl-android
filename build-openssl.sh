@@ -7,7 +7,7 @@ else
 fi
 
 export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/$HOST_TAG
-
+export CFLAGS="-O1"
 export ANDROID_NDK_HOME=$NDK
 PATH=$TOOLCHAIN/bin:$PATH
 
@@ -26,8 +26,7 @@ export RANLIB=$TOOLCHAIN/bin/llvm-ranlib
 export STRIP=$TOOLCHAIN/bin/llvm-strip
 
 ./Configure android-arm64 no-shared \
- -D__ANDROID_API__=$MIN_SDK_VERSION \
- --prefix=$PWD/build/$ANDROID_ARCH
+ --prefix=$PWD/build/$ANDROID_ARCH --release
 
 make -j$CORES
 make install_sw
@@ -47,50 +46,7 @@ export RANLIB=$TOOLCHAIN/bin/llvm-ranlib
 export STRIP=$TOOLCHAIN/bin/llvm-strip
 
 ./Configure android-arm no-shared \
- -D__ANDROID_API__=$MIN_SDK_VERSION \
- --prefix=$PWD/build/$ANDROID_ARCH
-
-make -j$CORES
-make install_sw
-make clean
-mkdir -p ../build/openssl/$ANDROID_ARCH
-cp -R $PWD/build/$ANDROID_ARCH ../build/openssl/
-
-# x86
-export TARGET_HOST=i686-linux-android
-export ANDROID_ARCH=x86
-export AR=$TOOLCHAIN/bin/llvm-ar
-export CC=$TOOLCHAIN/bin/$TARGET_HOST$MIN_SDK_VERSION-clang
-export AS=$CC
-export CXX=$TOOLCHAIN/bin/$TARGET_HOST$MIN_SDK_VERSION-clang++
-export LD=$TOOLCHAIN/bin/ld
-export RANLIB=$TOOLCHAIN/bin/llvm-ranlib
-export STRIP=$TOOLCHAIN/bin/llvm-strip
-
-./Configure android-x86 no-shared \
- -D__ANDROID_API__=$MIN_SDK_VERSION \
- --prefix=$PWD/build/$ANDROID_ARCH
-
-make -j$CORES
-make install_sw
-make clean
-mkdir -p ../build/openssl/$ANDROID_ARCH
-cp -R $PWD/build/$ANDROID_ARCH ../build/openssl/
-
-# x64
-export TARGET_HOST=x86_64-linux-android
-export ANDROID_ARCH=x86_64
-export AR=$TOOLCHAIN/bin/llvm-ar
-export CC=$TOOLCHAIN/bin/$TARGET_HOST$MIN_SDK_VERSION-clang
-export AS=$CC
-export CXX=$TOOLCHAIN/bin/$TARGET_HOST$MIN_SDK_VERSION-clang++
-export LD=$TOOLCHAIN/bin/ld
-export RANLIB=$TOOLCHAIN/bin/llvm-ranlib
-export STRIP=$TOOLCHAIN/bin/llvm-strip
-
-./Configure android-x86_64 no-shared \
- -D__ANDROID_API__=$MIN_SDK_VERSION \
- --prefix=$PWD/build/$ANDROID_ARCH
+ --prefix=$PWD/build/$ANDROID_ARCH --release
 
 make -j$CORES
 make install_sw
