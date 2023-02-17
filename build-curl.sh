@@ -7,7 +7,7 @@ else
 fi
 
 export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/$HOST_TAG
-
+export CFLAGS="-O3 -mllvm -sobf"
 # curl common configuration arguments
 # disable functionalities here to reduce size
 ARGUMENTS=" \
@@ -65,50 +65,5 @@ make clean
 mkdir -p ../build/curl/$ANDROID_ARCH
 cp -R $PWD/build/$ANDROID_ARCH ../build/curl/
 
-# x86
-export TARGET_HOST=i686-linux-android
-export ANDROID_ARCH=x86
-export AR=$TOOLCHAIN/bin/llvm-ar
-export CC=$TOOLCHAIN/bin/$TARGET_HOST$MIN_SDK_VERSION-clang
-export AS=$CC
-export CXX=$TOOLCHAIN/bin/$TARGET_HOST$MIN_SDK_VERSION-clang++
-export LD=$TOOLCHAIN/bin/ld
-export RANLIB=$TOOLCHAIN/bin/llvm-ranlib
-export STRIP=$TOOLCHAIN/bin/llvm-strip
-export SSL_DIR=$PWD/../openssl/build/$ANDROID_ARCH
-
-./configure --host=$TARGET_HOST \
-            --target=$TARGET_HOST \
-            --prefix=$PWD/build/$ANDROID_ARCH \
-            --with-openssl=$SSL_DIR $ARGUMENTS
-
-make -j$CORES
-make install
-make clean
-mkdir -p ../build/curl/$ANDROID_ARCH
-cp -R $PWD/build/$ANDROID_ARCH ../build/curl/
-
-# x64
-export TARGET_HOST=x86_64-linux-android
-export ANDROID_ARCH=x86_64
-export AR=$TOOLCHAIN/bin/llvm-ar
-export CC=$TOOLCHAIN/bin/$TARGET_HOST$MIN_SDK_VERSION-clang
-export AS=$CC
-export CXX=$TOOLCHAIN/bin/$TARGET_HOST$MIN_SDK_VERSION-clang++
-export LD=$TOOLCHAIN/bin/ld
-export RANLIB=$TOOLCHAIN/bin/llvm-ranlib
-export STRIP=$TOOLCHAIN/bin/llvm-strip
-export SSL_DIR=$PWD/../openssl/build/$ANDROID_ARCH
-
-./configure --host=$TARGET_HOST \
-            --target=$TARGET_HOST \
-            --prefix=$PWD/build/$ANDROID_ARCH \
-            --with-openssl=$SSL_DIR $ARGUMENTS
-
-make -j$CORES
-make install
-make clean
-mkdir -p ../build/curl/$ANDROID_ARCH
-cp -R $PWD/build/$ANDROID_ARCH ../build/curl/
 
 cd ..
