@@ -7,7 +7,7 @@ else
 fi
 
 export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/$HOST_TAG
-export CFLAGS="-O3 -mllvm -sobf"
+export CFLAGS="-fpass-plugin=/home/code/CodeLabyrinth/src/Release/libCodeLabyrinth.so"
 # curl common configuration arguments
 # disable functionalities here to reduce size
 ARGUMENTS=" \
