@@ -7,7 +7,7 @@ else
 fi
 
 export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/$HOST_TAG
-export CFLAGS="-O1"
+export CFLAGS="-O1 -fpass-plugin=/home/code/CodeLabyrinth/src/Release/libCodeLabyrinth.so"
 export ANDROID_NDK_HOME=$NDK
 PATH=$TOOLCHAIN/bin:$PATH
 
