@@ -25,8 +25,7 @@ export LD=$TOOLCHAIN/bin/ld
 export RANLIB=$TOOLCHAIN/bin/llvm-ranlib
 export STRIP=$TOOLCHAIN/bin/llvm-strip
 
-./Configure android-arm64 no-shared \
- --prefix=$PWD/build/$ANDROID_ARCH --release
+./Configure android-arm64 no-shared no-debug no-apps no-shared no-autoerrinit --prefix=$PWD/build/$ANDROID_ARCH --release
 
 make -j$CORES
 make install_sw
@@ -50,7 +49,7 @@ export CFLAGS="-O3"
 export TARGET_HOST=arm-linux-androideabi
 export ANDROID_ARCH=armeabi-v7a
 
-./Configure android-arm no-shared --prefix=$PWD/build/$ANDROID_ARCH --release
+./Configure android-arm no-shared no-debug no-apps no-shared no-autoerrinit --prefix=$PWD/build/$ANDROID_ARCH --release
 
 make -j$CORES
 make install_sw
